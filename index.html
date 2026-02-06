@@ -668,7 +668,7 @@
                         </address>
                     </div>
                     <div class="contact-form-wrapper fade-in">
-                        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xeeljday" method="POST" novalidate>
+                        <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST" novalidate>
                             <div class="form-group">
                                 <label for="name">Jméno / firma / SVJ *</label>
                                 <input type="text" id="name" name="name" required placeholder="Vaše jméno nebo název" autocomplete="name">
@@ -702,13 +702,12 @@
                                 <label for="message">Poznámka</label>
                                 <textarea id="message" name="message" rows="4" maxlength="2000" placeholder="Popište nám vaše potřeby nebo se na cokoliv zeptejte..."></textarea>
                             </div>
-                            <!-- Formspree configuration -->
-                            <input type="hidden" name="_subject" value="Nová poptávka z webu DUKLIDO">
+                            <!-- Web3Forms configuration -->
+                            <input type="hidden" name="access_key" value="a7b8f14b-c364-4f2b-a356-33feaa7e2265">
+                            <input type="hidden" name="subject" value="Nová poptávka z webu DUKLIDO">
+                            <input type="hidden" name="from_name" value="DUKLIDO Web">
                             <!-- Honeypot field for spam protection -->
-                            <div class="form-group" style="position: absolute; left: -9999px;" aria-hidden="true">
-                                <label for="website">Website</label>
-                                <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
-                            </div>
+                            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
                             <div class="form-group form-group-checkbox">
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="gdpr" name="gdpr" required>

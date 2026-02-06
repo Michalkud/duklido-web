@@ -172,16 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('email');
             const phone = document.getElementById('phone');
             const gdpr = document.getElementById('gdpr');
-            const honeypot = document.getElementById('website');
-
             let isValid = true;
             const errors = [];
-
-            // Honeypot check - if filled, it's likely a bot
-            if (honeypot && honeypot.value) {
-                console.log('Bot detected');
-                return;
-            }
 
             // Helper to show/hide field error
             const showFieldError = (field, message) => {
@@ -290,11 +282,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Accept': 'application/json'
                     }
                 })
-                .then(response => {
+                .then(response => response.json())
+                .then(data => {
                     submitBtn.classList.remove('loading');
                     submitBtn.disabled = false;
 
-                    if (response.ok) {
+                    if (data.success) {
                         showFormMessage('success', 'Děkujeme za vaši poptávku! Ozveme se vám co nejdříve.');
                         if (formStatus) {
                             formStatus.textContent = 'Formulář byl úspěšně odeslán. Děkujeme za vaši poptávku.';
