@@ -355,4 +355,146 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     }
 
+    // ===== Reviews Carousel (Multi-item) =====
+    const carousel = document.getElementById('reviewsCarousel');
+    if (carousel) {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const prevBtn = carousel.querySelector('.carousel-prev');
+        const nextBtn = carousel.querySelector('.carousel-next');
+        const dotsContainer = document.getElementById('carouselDots');
+
+        let currentIndex = 0;
+
+        // Get number of visible slides based on viewport
+        function getVisibleSlides() {
+            if (window.innerWidth <= 768) return 1;
+            if (window.innerWidth <= 1024) return 2;
+            return 3;
+        }
+
+        // Get number of pages based on visible slides
+        function getPageCount() {
+            const visibleSlides = getVisibleSlides();
+            return Math.ceil(slides.length / visibleSlides);
+        }
+
+        // Get maximum page index
+        function getMaxIndex() {
+            return Math.max(0, getPageCount() - 1);
+        }
+
+        // Create dots based on number of pages
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            const pageCount = getPageCount();
+            for (let i = 0; i < pageCount; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
+                dot.setAttribute('aria-label', `Přejít na stránku ${i + 1}`);
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Update carousel position
+        function updateCarousel() {
+            // Calculate transform based on actual slide width + gap
+            const slide = slides[0];
+            if (slide) {
+                const visibleSlides = getVisibleSlides();
+                const slideWidth = slide.offsetWidth;
+                const trackStyle = window.getComputedStyle(track);
+                const gap = parseFloat(trackStyle.gap) || 0;
+                // Move by full page (visibleSlides count)
+                const slideIndex = currentIndex * visibleSlides;
+                const moveDistance = (slideWidth + gap) * slideIndex;
+                track.style.transform = `translateX(-${moveDistance}px)`;
+            }
+
+            // Update dots
+            const dots = dotsContainer.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        // Go to specific slide
+        function goToSlide(index) {
+            const maxIndex = getMaxIndex();
+            currentIndex = index;
+            if (currentIndex < 0) currentIndex = maxIndex;
+            if (currentIndex > maxIndex) currentIndex = 0;
+            updateCarousel();
+        }
+
+        // Next slide
+        function nextSlide() {
+            goToSlide(currentIndex + 1);
+        }
+
+        // Previous slide
+        function prevSlide() {
+            goToSlide(currentIndex - 1);
+        }
+
+        // Event listeners
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Keyboard navigation
+        carousel.setAttribute('tabindex', '0');
+        carousel.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+
+        // Handle window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const maxIndex = getMaxIndex();
+                if (currentIndex > maxIndex) {
+                    currentIndex = maxIndex;
+                }
+                createDots();
+                updateCarousel();
+            }, 150);
+        });
+
+        // Initialize
+        createDots();
+        updateCarousel();
+    }
+
 });

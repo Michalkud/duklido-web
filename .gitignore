@@ -3,3 +3,6 @@
 .playwright-mcp/
 logs/
 node_modules/
+
+# Local Netlify folder
+.netlify
