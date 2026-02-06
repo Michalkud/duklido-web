@@ -264,7 +264,9 @@ p:last-child {
 }
 
 .navbar.scrolled {
-    background-color: var(--color-white);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: var(--shadow-sm);
     padding: 12px 0;
 }
@@ -1058,9 +1060,10 @@ section {
         gap: var(--space-xs);
     }
 
+    /* Ensure carousel arrows meet 44px touch target */
     .carousel-arrow {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
     }
 
     .review-card {
@@ -1070,6 +1073,31 @@ section {
     .review-text {
         font-size: 0.9rem;
         line-height: 1.7;
+    }
+}
+
+/* Carousel dots touch target improvement for all mobile */
+@media (max-width: 768px) {
+    .carousel-dot {
+        width: 12px;
+        height: 12px;
+        padding: 0;
+        position: relative;
+    }
+
+    /* Expand touch target to 44px without changing visual size */
+    .carousel-dot::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 44px;
+        height: 44px;
+    }
+
+    .carousel-dots {
+        gap: 12px;
     }
 }
 
@@ -1713,16 +1741,21 @@ section {
     .nav-links {
         flex-direction: column;
         align-items: center;
-        gap: var(--space-md);
+        gap: 4px;
     }
 
+    /* Improve touch targets for nav links (min 44px tap area) */
     .nav-links a {
         color: var(--color-primary);
         font-size: 1rem;
+        display: block;
+        padding: 12px 24px;
+        min-height: 44px;
     }
 
     .nav-cta {
         background-color: var(--color-accent);
+        min-height: 44px;
     }
 }
 
@@ -1733,8 +1766,17 @@ section {
         --space-2xl: 80px;
     }
 
-    .logo-text {
+    /* Fix specificity: .navbar .logo-white (0,2,0) overrode .logo-text (0,1,0) */
+    .navbar .logo-text.logo-white,
+    .navbar .logo-text.logo-dark,
+    .navbar.scrolled .logo-text.logo-white,
+    .navbar.scrolled .logo-text.logo-dark {
         display: none;
+    }
+
+    /* Fix iOS: background-attachment: fixed causes glitch on mobile Safari */
+    .hero {
+        background-attachment: scroll;
     }
 
     .services-grid {
@@ -1763,6 +1805,17 @@ section {
         grid-template-columns: 1fr;
     }
 
+    /* Improve touch targets for footer links (min 44px tap area) */
+    .footer-nav a {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .footer-contact-item {
+        justify-content: center;
+        min-height: 44px;
+    }
+
     .footer-links {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
@@ -1788,14 +1841,24 @@ section {
         transform: translateX(-50%);
     }
 
-    .footer-contact-item {
-        justify-content: center;
-    }
-
     .footer-bottom {
         flex-direction: column;
         gap: var(--space-sm);
         text-align: center;
+    }
+
+    .footer-bottom-links a {
+        display: inline-block;
+        padding: 8px 0;
+    }
+
+    /* Improve contact info touch targets */
+    .contact-item {
+        min-height: 44px;
+    }
+
+    .contact-item a {
+        padding: 8px 0;
     }
 }
 
@@ -1830,5 +1893,33 @@ section {
         width: 70px;
         height: 70px;
         font-size: 1.5rem;
+    }
+
+    /* Bigger checkbox for touch */
+    .checkbox-label input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+    }
+
+    /* Ensure form select doesn't trigger iOS zoom (must be >= 16px) */
+    .form-group select {
+        font-size: 1rem;
+    }
+
+    /* Section header spacing tightened */
+    .section-header {
+        margin-bottom: var(--space-lg);
+    }
+
+    /* Tighten hero tagline spacing */
+    .hero-tagline {
+        margin-bottom: var(--space-lg);
+    }
+
+    /* Reviews link touch target */
+    .reviews-link {
+        padding: 10px 0;
+        min-height: 44px;
     }
 }
