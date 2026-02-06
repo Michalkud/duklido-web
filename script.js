@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatus.textContent = 'Odesílám formulář...';
                 }
 
-                // Submit form via Formsubmit.co AJAX
+                // Submit form via Formspree AJAX
                 const formData = new FormData(contactForm);
 
                 fetch(contactForm.action, {
@@ -290,12 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Accept': 'application/json'
                     }
                 })
-                .then(response => response.json())
-                .then(data => {
+                .then(response => {
                     submitBtn.classList.remove('loading');
                     submitBtn.disabled = false;
 
-                    if (data.success) {
+                    if (response.ok) {
                         showFormMessage('success', 'Děkujeme za vaši poptávku! Ozveme se vám co nejdříve.');
                         if (formStatus) {
                             formStatus.textContent = 'Formulář byl úspěšně odeslán. Děkujeme za vaši poptávku.';
