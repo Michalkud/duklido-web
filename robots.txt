@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://michalkud.github.io/duklido-web/sitemap.xml
