@@ -448,7 +448,7 @@ p:last-child {
     right: 0;
     bottom: 0;
     background:
-        linear-gradient(180deg, rgba(22, 50, 72, 0.92) 0%, rgba(22, 50, 72, 0.85) 50%, rgba(22, 50, 72, 0.92) 100%),
+        linear-gradient(180deg, rgba(14, 36, 52, 1) 0%, rgba(18, 42, 60, 0.95) 50%, rgba(14, 36, 52, 1) 100%),
         repeating-linear-gradient(
             0deg,
             transparent,
