@@ -452,6 +452,7 @@ p:last-child {
     background-attachment: fixed;
     filter: blur(4px);
     transform: scale(1.05);
+    z-index: 1;
 }
 
 /* Dark overlay with texture effect */
@@ -472,6 +473,7 @@ p:last-child {
             rgba(0, 0, 0, 0.03) 4px
         );
     pointer-events: none;
+    z-index: 2;
 }
 
 /* Subtle vignette effect */
@@ -484,6 +486,7 @@ p:last-child {
     bottom: 0;
     background: radial-gradient(ellipse at center, transparent 0%, rgba(22, 50, 72, 0.4) 100%);
     pointer-events: none;
+    z-index: 2;
 }
 
 .hero-container {
@@ -494,7 +497,7 @@ p:last-child {
     max-width: 800px;
     margin: 0 auto;
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 
 .hero-content {
