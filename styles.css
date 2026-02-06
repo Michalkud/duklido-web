@@ -434,14 +434,24 @@ p:last-child {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    padding: 160px 0 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('resources/hero-bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    padding: 160px 0 120px;
-    position: relative;
-    overflow: hidden;
+    filter: blur(4px);
+    transform: scale(1.05);
 }
 
 /* Dark overlay with texture effect */
@@ -1775,7 +1785,7 @@ section {
     }
 
     /* Fix iOS: background-attachment: fixed causes glitch on mobile Safari */
-    .hero {
+    .hero-bg {
         background-attachment: scroll;
     }
 
