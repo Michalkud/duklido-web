@@ -280,18 +280,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     formStatus.textContent = 'Odesílám formulář...';
                 }
 
-                // Simulate form submission (replace with actual submission in production)
-                setTimeout(() => {
+                // Submit form via Formsubmit.co AJAX
+                const formData = new FormData(contactForm);
+
+                fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
                     submitBtn.classList.remove('loading');
                     submitBtn.disabled = false;
 
-                    // Form is valid - show success message
-                    showFormMessage('success', 'Děkujeme za vaši poptávku! Ozveme se vám co nejdříve.');
-                    if (formStatus) {
-                        formStatus.textContent = 'Formulář byl úspěšně odeslán. Děkujeme za vaši poptávku.';
+                    if (data.success) {
+                        showFormMessage('success', 'Děkujeme za vaši poptávku! Ozveme se vám co nejdříve.');
+                        if (formStatus) {
+                            formStatus.textContent = 'Formulář byl úspěšně odeslán. Děkujeme za vaši poptávku.';
+                        }
+                        contactForm.reset();
+                    } else {
+                        showFormMessage('error', 'Odeslání se nezdařilo. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
+                        if (formStatus) {
+                            formStatus.textContent = 'Odeslání formuláře se nezdařilo.';
+                        }
                     }
-                    contactForm.reset();
-                }, 1500);
+                })
+                .catch(() => {
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                    showFormMessage('error', 'Odeslání se nezdařilo. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
+                    if (formStatus) {
+                        formStatus.textContent = 'Odeslání formuláře se nezdařilo.';
+                    }
+                });
             } else {
                 // Show first error
                 showFormMessage('error', errors[0]);

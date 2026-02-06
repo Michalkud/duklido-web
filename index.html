@@ -665,7 +665,7 @@
                         </address>
                     </div>
                     <div class="contact-form-wrapper fade-in">
-                        <form class="contact-form" id="contactForm" action="#" method="POST" novalidate>
+                        <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/info@duklido.cz" method="POST" novalidate>
                             <div class="form-group">
                                 <label for="name">Jméno / firma / SVJ *</label>
                                 <input type="text" id="name" name="name" required placeholder="Vaše jméno nebo název" autocomplete="name">
@@ -699,10 +699,14 @@
                                 <label for="message">Poznámka</label>
                                 <textarea id="message" name="message" rows="4" maxlength="2000" placeholder="Popište nám vaše potřeby nebo se na cokoliv zeptejte..."></textarea>
                             </div>
+                            <!-- Formsubmit.co configuration -->
+                            <input type="hidden" name="_subject" value="Nová poptávka z webu DUKLIDO">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_template" value="table">
                             <!-- Honeypot field for spam protection -->
                             <div class="form-group" style="position: absolute; left: -9999px;" aria-hidden="true">
                                 <label for="website">Website</label>
-                                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                                <input type="text" id="website" name="_honey" tabindex="-1" autocomplete="off">
                             </div>
                             <div class="form-group form-group-checkbox">
                                 <label class="checkbox-label">
